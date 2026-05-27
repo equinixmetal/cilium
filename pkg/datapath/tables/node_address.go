@@ -481,7 +481,7 @@ func (n *nodeAddressController) getAddressesFromDevice(dev *Device) []NodeAddres
 
 		isPublic := ip.IsPublicAddr(addr.Addr.AsSlice())
 		if addr.Addr.Is4() {
-			if addr.Addr.Unmap() == k8sIPv4.Unmap() {
+			if addr.Addr.Unmap() == n.k8sIPv4.Unmap() {
 				// Address matches the K8s Node IP. Prioritize it within its
 				// category (public or private) for NodePort address selection.
 				// We don't force it to both categories, as that would break
@@ -504,7 +504,7 @@ func (n *nodeAddressController) getAddressesFromDevice(dev *Device) []NodeAddres
 		}
 
 		if addr.Addr.Is6() {
-			if addr.Addr == k8sIPv6 {
+			if addr.Addr == n.k8sIPv6 {
 				// Address matches the K8s Node IP. Prioritize it within its
 				// category (public or private) for NodePort address selection.
 				// We don't force it to both categories, as that would break

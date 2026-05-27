@@ -288,25 +288,25 @@ var nodeAddressTests = []struct {
 		wantAddrs: []net.IP{
 			ciliumHostIP,
 			ciliumHostIPLinkScoped,
-			netip.MustParseAddr("10.0.0.1"),
-			netip.MustParseAddr("1.1.1.1"),
-			testNodeIPv4,
-			netip.MustParseAddr("2001:db8::1"),
-			netip.MustParseAddr("2600:beef::1"),
-			testNodeIPv6,
+			net.ParseIP("10.0.0.1"),
+			net.ParseIP("1.1.1.1"),
+			testNodeIPv4.AsSlice(),
+			net.ParseIP("2001:db8::1"),
+			net.ParseIP("2600:beef::1"),
+			testNodeIPv6.AsSlice(),
 		},
 
 		// Primary prefers public; among public IPs, K8s Node IP is prioritized
-		wantPrimary: []netip.Addr{
+		wantPrimary: []net.IP{
 			ciliumHostIP,
-			netip.MustParseAddr("1.1.1.1"), // IPv4: only public IP
-			testNodeIPv6,                   // IPv6: K8s Node IP prioritized among public
+			net.ParseIP("1.1.1.1"), // IPv4: only public IP
+			testNodeIPv6.AsSlice(), // IPv6: K8s Node IP prioritized among public
 		},
 
 		// NodePort prefers private; among private IPs, K8s Node IP is prioritized
-		wantNodePort: []netip.Addr{
-			testNodeIPv4,                       // IPv4: K8s Node IP prioritized among private
-			netip.MustParseAddr("2001:db8::1"), // IPv6: only private IP
+		wantNodePort: []net.IP{
+			testNodeIPv4.AsSlice(),     // IPv4: K8s Node IP prioritized among private
+			net.ParseIP("2001:db8::1"), // IPv6: only private IP
 		},
 	},
 }
