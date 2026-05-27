@@ -77,7 +77,7 @@ jobs:
           echo "tag=${TAG}" >> $GITHUB_OUTPUT
 
           # Create image tags for Docker image.
-          echo image_tags=$${{ env.REGISTRY }}/${{ env.IMAGE_PREFIX }}/${{ matrix.name }}:${TAG} >> $GITHUB_OUTPUT
+          echo image_tags=${{ env.REGISTRY }}/${{ env.IMAGE_PREFIX }}/${{ matrix.name }}:${TAG} >> $GITHUB_OUTPUT
 
       - name: Get runtime image
         id: runtime
